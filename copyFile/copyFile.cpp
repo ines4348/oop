@@ -1,21 +1,80 @@
-// copyFile.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include "pch.h"
 #include <iostream>
+#include <fstream>
+#include <optional>
+#include <string>
 
-int main()
+struct Args
 {
-    std::cout << "Hello World!\n"; 
+	std::string inputFileName;
+	std::string outputFileName;
+};
+
+std::optional<Args> parseArguments(int argc, char* argv[])
+{
+	if (argc != 3)
+	{
+		std::cout << "Invalid argument count\n ";
+		std::cout << "Usage: lab1_CopyFile.exe <input file> <output file>\n ";
+		return std::nullopt;
+	}
+
+	Args args;
+	args.inputFileName = argv[1];
+	args.outputFileName = argv[2];
+	return args;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void copyFile(std::ifstream &inFile, std::ofstream &outFile)
+{
+	char ch;
+	while (inFile.get(ch))
+	{
+		if (!outFile.put(ch))
+		{
+			break;
+		}
+	}
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+int main(int argc, char* argv[])
+{
+	auto args = parseArguments(argc, argv);
+
+	if (!args)
+	{
+		return 1;
+	}
+
+	std::ifstream inFile;
+	inFile.open(args->inputFileName);
+	if (!inFile.is_open())
+	{
+		std::cout << "Failed to open " << args->inputFileName << " for reading";
+		return 1;
+	}
+
+	std::ofstream outFile;
+	outFile.open(args->outputFileName);
+	if (!outFile.is_open())
+	{
+		std::cout << "Failed to open " << args->outputFileName << " for writing";
+		return 1;
+	}
+
+	copyFile(inFile, outFile);
+
+	if (inFile.bad())
+	{
+		std::cout << "Failed to read data from input file";
+		return 1;
+	}
+
+	if (!outFile.flush())
+	{
+		std::cout << "Failed to write data to output file";
+		return 1;
+	}
+	return 0;
+}
+
