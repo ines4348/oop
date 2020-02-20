@@ -31,24 +31,35 @@ void copyFile(std::ifstream &inFile, std::ofstream &outFile) {
   }
 }
 
+bool openInOutFiles(std::ifstream &inFile, std::ofstream &outFile,
+                    std::optional<Args> args) {
+
+  inFile.open(args->inputFileName);
+  if (!inFile.is_open()) {
+    std::cout << "Failed to open " << args->inputFileName << " for reading";
+    return false;
+  }
+
+  outFile.open(args->outputFileName);
+  if (!outFile.is_open()) {
+    std::cout << "Failed to open " << args->outputFileName << " for writing";
+    return false;
+  }
+
+  return true;
+}
+
 int main(int argc, char *argv[]) {
   auto args = parseArguments(argc, argv);
+
+  std::ifstream inFile;
+  std::ofstream outFile;
 
   if (!args) {
     return 1;
   }
 
-  std::ifstream inFile;
-  inFile.open(args->inputFileName);
-  if (!inFile.is_open()) {
-    std::cout << "Failed to open " << args->inputFileName << " for reading";
-    return 1;
-  }
-
-  std::ofstream outFile;
-  outFile.open(args->outputFileName);
-  if (!outFile.is_open()) {
-    std::cout << "Failed to open " << args->outputFileName << " for writing";
+  if (!openInOutFiles(inFile, outFile, args)) {
     return 1;
   }
 
