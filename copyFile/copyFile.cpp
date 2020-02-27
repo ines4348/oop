@@ -37,7 +37,7 @@ void CopyStream(std::istream& inFile, std::ostream& outFile)
 	}
 }
 
-bool CopyFile(std::string const& inputFileName, std::string const& outputFileName)
+bool CopyFile(const std::string& inputFileName, const std::string &outputFileName)
 {
 	std::ifstream inFile;
 	std::ofstream outFile;
