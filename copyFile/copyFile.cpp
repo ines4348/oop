@@ -22,7 +22,7 @@ std::optional<Args> parseArguments(int argc, char *argv[]) {
   return args;
 }
 
-void copyFile(std::ifstream &inFile, std::ofstream &outFile) {
+void copyStream(std::istream &inFile, std::ostream &outFile) {
   char ch;
   while (inFile.get(ch)) {
     if (!outFile.put(ch)) {
@@ -32,7 +32,7 @@ void copyFile(std::ifstream &inFile, std::ofstream &outFile) {
 }
 
 bool openInOutFiles(std::ifstream &inFile, std::ofstream &outFile,
-                    std::string inputFileName, std::string outputFileName) {
+                    std::string &inputFileName, std::string &outputFileName) {
 
   inFile.open(inputFileName);
   if (!inFile.is_open()) {
@@ -49,31 +49,39 @@ bool openInOutFiles(std::ifstream &inFile, std::ofstream &outFile,
   return true;
 }
 
-int main(int argc, char *argv[]) {
-  auto args = parseArguments(argc, argv);
-
+bool copyFile(std::string inputFileName, std::string outputFileName) {
   std::ifstream inFile;
   std::ofstream outFile;
+
+  if (!openInOutFiles(inFile, outFile, inputFileName, outputFileName)) {
+    return false;
+  }
+
+  copyStream(inFile, outFile);
+
+  if (inFile.bad()) {
+    std::cout << "Failed to read data from input file";
+    return false;
+  }
+
+  if (!outFile.flush()) {
+    std::cout << "Failed to write data to output file";
+    return false;
+  }
+
+  return true;
+}
+
+int main(int argc, char *argv[]) {
+  auto args = parseArguments(argc, argv);
 
   if (!args) {
     return 1;
   }
 
-  if (!openInOutFiles(inFile, outFile, args->inputFileName,
-                      args->outputFileName)) {
+  if (!copyFile(args->inputFileName, args->outputFileName)) {
     return 1;
   }
 
-  copyFile(inFile, outFile);
-
-  if (inFile.bad()) {
-    std::cout << "Failed to read data from input file";
-    return 1;
-  }
-
-  if (!outFile.flush()) {
-    std::cout << "Failed to write data to output file";
-    return 1;
-  }
   return 0;
 }
