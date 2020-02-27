@@ -182,7 +182,7 @@
     <Text Include="..\..\oop1\ConsoleApplication1\oop\CopyFile\output.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\oop1\ConsoleApplication1\oop\CopyFile\Tests.bat" />
+    <None Include="Tests.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

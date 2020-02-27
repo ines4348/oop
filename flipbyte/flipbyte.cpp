@@ -10,7 +10,7 @@ struct Args {
 std::optional<Args> ParseArguments(int argc, char *argv[]) {
   if (argc != 2) {
     std::cout << "Invalid argument count\n ";
-    std::cout << "Usage: flipbyte.exe <integer 0..255>\n ";
+    std::cout << "Usage: flipbyte.exe <integer 0..255>\n";
     return std::nullopt;
   }
 
@@ -23,6 +23,7 @@ void FlipByte(int &x);
 
 int main(int argc, char *argv[]) {
   auto args = ParseArguments(argc, argv);
+
   if (!args) {
     return 1;
   }
