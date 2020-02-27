@@ -12,7 +12,7 @@ struct Args {
 std::optional<Args> parseArguments(int argc, char *argv[]) {
   if (argc != 3) {
     std::cout << "Invalid argument count\n ";
-    std::cout << "Usage: lab1_CopyFile.exe <input file> <output file>\n ";
+    std::cout << "Usage: ñopyFile.exe <input file> <output file>\n ";
     return std::nullopt;
   }
 
