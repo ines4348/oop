@@ -9,7 +9,7 @@ struct Args {
   std::string outputFileName;
 };
 
-std::optional<Args> parseArguments(int argc, char *argv[]) {
+std::optional<Args> ParseArguments(int argc, char *argv[]) {
   if (argc != 3) {
     std::cout << "Invalid argument count\n ";
     std::cout << "Usage: ñopyFile.exe <input file> <output file>\n ";
@@ -22,7 +22,7 @@ std::optional<Args> parseArguments(int argc, char *argv[]) {
   return args;
 }
 
-void copyStream(std::istream &inFile, std::ostream &outFile) {
+void CopyStream(std::istream &inFile, std::ostream &outFile) {
   char ch;
   while (inFile.get(ch)) {
     if (!outFile.put(ch)) {
@@ -31,7 +31,7 @@ void copyStream(std::istream &inFile, std::ostream &outFile) {
   }
 }
 
-bool openInOutFiles(std::ifstream &inFile, std::ofstream &outFile,
+bool OpenInOutFiles(std::ifstream &inFile, std::ofstream &outFile,
                     std::string &inputFileName, std::string &outputFileName) {
 
   inFile.open(inputFileName);
@@ -49,15 +49,15 @@ bool openInOutFiles(std::ifstream &inFile, std::ofstream &outFile,
   return true;
 }
 
-bool copyFile(std::string inputFileName, std::string outputFileName) {
+bool CopyFile(std::string inputFileName, std::string outputFileName) {
   std::ifstream inFile;
   std::ofstream outFile;
 
-  if (!openInOutFiles(inFile, outFile, inputFileName, outputFileName)) {
+  if (!OpenInOutFiles(inFile, outFile, inputFileName, outputFileName)) {
     return false;
   }
 
-  copyStream(inFile, outFile);
+  CopyStream(inFile, outFile);
 
   if (inFile.bad()) {
     std::cout << "Failed to read data from input file";
@@ -73,13 +73,13 @@ bool copyFile(std::string inputFileName, std::string outputFileName) {
 }
 
 int main(int argc, char *argv[]) {
-  auto args = parseArguments(argc, argv);
+  auto args = ParseArguments(argc, argv);
 
   if (!args) {
     return 1;
   }
 
-  if (!copyFile(args->inputFileName, args->outputFileName)) {
+  if (!CopyFile(args->inputFileName, args->outputFileName)) {
     return 1;
   }
 
