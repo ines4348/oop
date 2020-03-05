@@ -22,7 +22,7 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 	return arg;
 }
 
-void FlipByte(int& x)
+void FlipByte(uint16_t& x)
 {
 	// Четные и нечетные биты поменялись местами.
 	x = ((x & 0x55) << 1) | ((x >> 1) & 0x55);
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	int x = 0;
+	uint16_t x = 0;
 	size_t found = args->operand.find_first_not_of("0123456789", 0);
 
 	if (found == -1)
@@ -50,12 +50,18 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		std::cout << "The argument contains characters other than numbers\n";
+		std::cout << "The argument contains characters other than numbers. Usage: flipbyte.exe <integer 0..255>\n";
+		return 1;
+	}
+
+	if (x > 255)
+	{
+		std::cout << "Invalid argument value. Usage: flipbyte.exe <integer 0..255>\n";
 		return 1;
 	}
 
 	FlipByte(x);
-	std::cout << "x = " << x;
+	std::cout << x;
 
 	return 0;
 }
