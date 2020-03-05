@@ -30,6 +30,8 @@ REM Error with a large number
 %MyProgram% "A256">"%TEMP%\output.txt" && goto err
 echo Test 5 passed sucsessfully
 
+REM Добавить проверку на 0
+
 REM Все тесты прошли успешно
 echo All tests passed sucsessfully
 

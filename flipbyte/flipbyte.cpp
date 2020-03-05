@@ -22,7 +22,7 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 	return arg;
 }
 
-void FlipByte(uint16_t& x)
+void FlipByte(uint8_t& x)
 {
 	// Четные и нечетные биты поменялись местами.
 	x = ((x & 0x55) << 1) | ((x >> 1) & 0x55);
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	uint16_t x = 0;
+	uint8_t x = 0;
 	size_t found = args->operand.find_first_not_of("0123456789", 0);
 
 	if (found == -1)
