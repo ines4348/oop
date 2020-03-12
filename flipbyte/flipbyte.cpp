@@ -1,11 +1,14 @@
 ﻿#include "pch.h"
 #include <iostream>
+#include <limits>
 #include <optional>
 #include <string>
 
 struct Args
 {
-	std::string operand;
+	std::string argumentOfProgramm;
+	uint8_t numberToFlipByte = 0;
+	bool isParsingArgumentSuccessful = false;
 };
 
 std::optional<Args> ParseArguments(int argc, char* argv[])
@@ -18,7 +21,29 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 	}
 
 	Args arg;
-	arg.operand = argv[1];
+	arg.argumentOfProgramm = argv[1];
+	int tempNumberToFlipByte;
+	size_t found = arg.argumentOfProgramm.find_first_not_of("0123456789", 0);
+
+	if (found == -1)
+	{
+		tempNumberToFlipByte = std::stoi(arg.argumentOfProgramm);
+	}
+	else
+	{
+		std::cout << "The argument contains characters other than numbers. Usage: flipbyte.exe <integer 0..255>\n";
+		return arg;
+	}
+
+	if (tempNumberToFlipByte < std::numeric_limits<uint8_t>::min() || tempNumberToFlipByte > std::numeric_limits<uint8_t>::max())
+	{
+		std::cout << "Invalid argument value. Usage: flipbyte.exe <integer 0..255>\n";
+	}
+	else
+	{
+		arg.numberToFlipByte = tempNumberToFlipByte;
+		arg.isParsingArgumentSuccessful = true;
+	}
 	return arg;
 }
 
@@ -34,34 +59,15 @@ void FlipByte(uint8_t& x)
 
 int main(int argc, char* argv[])
 {
-	auto args = ParseArguments(argc, argv);
+	auto arg = ParseArguments(argc, argv);
 
-	if (!args)
+	if (!arg->isParsingArgumentSuccessful)
 	{
 		return 1;
 	}
 
-	uint8_t x = 0;
-	size_t found = args->operand.find_first_not_of("0123456789", 0);
-
-	if (found == -1)
-	{
-		x = std::stoi(args->operand);
-	}
-	else
-	{
-		std::cout << "The argument contains characters other than numbers. Usage: flipbyte.exe <integer 0..255>\n";
-		return 1;
-	}
-
-	if (x > 255)
-	{
-		std::cout << "Invalid argument value. Usage: flipbyte.exe <integer 0..255>\n";
-		return 1;
-	}
-
-	FlipByte(x);
-	std::cout << x;
+	FlipByte(arg->numberToFlipByte);
+	std::cout << static_cast<int>(arg->numberToFlipByte) << "\n";
 
 	return 0;
 }
