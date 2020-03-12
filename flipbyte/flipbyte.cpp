@@ -11,17 +11,8 @@ struct Args
 	bool isParsingArgumentSuccessful = false;
 };
 
-std::optional<Args> ParseArguments(int argc, char* argv[])
+void verifyArgument(Args &arg)
 {
-	if (argc != 2)
-	{
-		std::cout << "Invalid argument count\n";
-		std::cout << "Usage: flipbyte.exe <integer 0..255>\n";
-		return std::nullopt;
-	}
-
-	Args arg;
-	arg.argumentOfProgramm = argv[1];
 	int tempNumberToFlipByte;
 	size_t found = arg.argumentOfProgramm.find_first_not_of("0123456789", 0);
 
@@ -32,7 +23,6 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 	else
 	{
 		std::cout << "The argument contains characters other than numbers. Usage: flipbyte.exe <integer 0..255>\n";
-		return arg;
 	}
 
 	if (tempNumberToFlipByte < std::numeric_limits<uint8_t>::min() || tempNumberToFlipByte > std::numeric_limits<uint8_t>::max())
@@ -44,6 +34,20 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 		arg.numberToFlipByte = tempNumberToFlipByte;
 		arg.isParsingArgumentSuccessful = true;
 	}
+}
+
+std::optional<Args> ParseArguments(int argc, char* argv[])
+{
+	if (argc != 2)
+	{
+		std::cout << "Invalid argument count\n";
+		std::cout << "Usage: flipbyte.exe <integer 0..255>\n";
+		return std::nullopt;
+	}
+
+	Args arg;
+	arg.argumentOfProgramm = argv[1];
+	verifyArgument(arg);
 	return arg;
 }
 
