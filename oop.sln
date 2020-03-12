@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.clang-format = .clang-format
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "invert", "invert\invert.vcxproj", "{91231C19-00C4-4099-93EF-8F205DF9D2AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -36,6 +38,14 @@ Global
 		{B3032037-9112-49A4-B099-B4E86D003798}.Release|x64.Build.0 = Release|x64
 		{B3032037-9112-49A4-B099-B4E86D003798}.Release|x86.ActiveCfg = Release|Win32
 		{B3032037-9112-49A4-B099-B4E86D003798}.Release|x86.Build.0 = Release|Win32
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Debug|x64.ActiveCfg = Debug|x64
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Debug|x64.Build.0 = Debug|x64
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Debug|x86.ActiveCfg = Debug|Win32
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Debug|x86.Build.0 = Debug|Win32
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Release|x64.ActiveCfg = Release|x64
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Release|x64.Build.0 = Release|x64
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Release|x86.ActiveCfg = Release|Win32
+		{91231C19-00C4-4099-93EF-8F205DF9D2AC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

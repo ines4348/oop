@@ -25,7 +25,7 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 	int tempNumberToFlipByte;
 	size_t found = arg.argumentOfProgramm.find_first_not_of("0123456789", 0);
 
-	if (found == -1)
+	if (found == std::numeric_limits<size_t>::max())
 	{
 		tempNumberToFlipByte = std::stoi(arg.argumentOfProgramm);
 	}
