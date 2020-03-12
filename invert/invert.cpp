@@ -5,6 +5,8 @@
 #include <string>
 #include <limits>
 
+typedef double Matrix3x3[3][3];
+
 struct Args
 {
 	std::string nameOfInputDataFile;
@@ -24,17 +26,32 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 	return arg;
 }
 
-bool copyDoubleFromFileToArray(std::istream& inFile)
+bool copyDoubleFromFileToArray(std::istream& inFile, Matrix3x3 matrix)
 {
 	std::string str;
-	while (inFile >> str)
-	{
-		size_t notDigitPosition = str.find_first_not_of("0123456789-,", 0);
-		if (notDigitPosition == -1)
-		{
+	const int matrixSize = 3;
 
+	for (int i = 0; i < matrixSize; i++)
+	{
+		for (int j = 0; j < matrixSize; j++)
+		{
+			if (inFile.eof())
+			{
+				return false;
+			}
+			else
+			{
+				inFile >> str;
+				size_t notDigitPosition = str.find_first_not_of("0123456789-,.", 0);
+				if (notDigitPosition == std::numeric_limits<size_t>::max())
+				{
+					matrix[i][j] = std::stof(str);
+				}
+			}
 		}
 	}
+
+	return true;
 }
 
 bool copyMatrixFromFileToArray(const std::string& inputFileName)
@@ -48,7 +65,21 @@ bool copyMatrixFromFileToArray(const std::string& inputFileName)
 		return false;
 	}
 
-	copyDoubleFromFileToArray(inputFile);
+	Matrix3x3 matrix={};
+	if (copyDoubleFromFileToArray(inputFile, matrix))
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+
+				std::cout << matrix[i][j] << " ";
+			}
+			std::cout << "\n";
+		}
+	}
+
+	
 
 	if (inputFile.bad())
 	{
@@ -63,9 +94,14 @@ bool getInvertMatrix(const std::string& inputFileName)
 {
 	//открыть файл и скопировать данные в массив
 	copyMatrixFromFileToArray(inputFileName);
+
+	//
+	
 	//найти определитель матрицы
 
 	//если определитель не равен 0, найти обратную матрицу
+
+	return true;
 }
 
 int main(int argc, char* argv[])
