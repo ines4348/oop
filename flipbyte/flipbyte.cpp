@@ -11,7 +11,7 @@ struct Args
 	bool isParsingArgumentSuccessful = false;
 };
 
-void verifyArgument(Args &arg)
+void verifyArgument(Args& arg)
 {
 	int tempNumberToFlipByte;
 	size_t found = arg.argumentOfProgramm.find_first_not_of("0123456789", 0);
