@@ -260,3 +260,10 @@ paket-files/
 __pycache__/
 *.pyc
 flipbyte/Проверка алгоритма.txt
+lab1appendix/fill-2.txt
+lab1appendix/fill.txt
+lab1appendix/labyrinth-1.txt
+lab1appendix/labyrinth-2.txt
+lab1appendix/labyrinth-3.txt
+lab1appendix/life.txt
+lab1appendix/matrix.txt
