@@ -10,7 +10,7 @@ if %MyProgram%=="" (
 )
 
 REM Запуск без параметра
-%MyProgram% && goto err
+%MyProgram%>"%TEMP%\output.txt" && goto err
 echo Test 1 passed sucsessfully
 
 REM На вход дан пустой файл
@@ -28,11 +28,11 @@ fc etalonTest.txt "%TEMP%\output.txt" > nul || goto err
 echo Test 4 passed sucsessfully
 
 REM Параметром передан несуществующий файл
-%MyProgram% missing.txt "%TEMP%\output.txt" && goto err
+%MyProgram% missing.txt>"%TEMP%\output.txt" && goto err
 echo Test 5 passed sucsessfully
 
 REM Копирование с тремя аргументами в качестве параметра программы
-%MyProgram% input.txt input1.txt input2.txt && goto err
+%MyProgram% input.txt input1.txt input2.txt>"%TEMP%\output.txt" && goto err
 echo Test 6 passed sucsessfully
 
 REM Определитель равен 0

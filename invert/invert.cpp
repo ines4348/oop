@@ -16,7 +16,7 @@ std::optional<Args> ParseArguments(int argc, char* argv[])
 	if (argc != 2)
 	{
 		std::cout << "Invalid argument count\n";
-		std::cout << "Usage: invert.exe <matrix file1>\n";
+		std::cout << "Usage: invert.exe <matrix file>\n";
 		return std::nullopt;
 	}
 
