@@ -29,5 +29,16 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
+    <Text Include="empty.txt" />
+    <Text Include="sucsessfullyTest.txt" />
+    <Text Include="det0.txt" />
+    <Text Include="etalon.txt" />
+    <Text Include="char.txt" />
+    <Text Include="3x2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tests.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

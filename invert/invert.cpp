@@ -4,6 +4,7 @@
 #include <limits>
 #include <optional>
 #include <string>
+#include <iomanip>
 
 struct Args
 {
@@ -119,6 +120,15 @@ double GetDet(double** matrix, int matrixSize)
 	return detMatrix;
 }
 
+void FreeMemory(double** matrix, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		delete[] matrix[i];
+	}
+	delete[] matrix;
+}
+
 void InverseMatrix(double** matrix, double** inverseMatrix, double detMatrix)
 {
 	for (int i = 0; i < 3; i++)
@@ -149,30 +159,28 @@ void PrintMatrix(double** matrix)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			std::cout << matrix[i][j] << " ";
+			std::cout << std::setprecision(3) << matrix[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}
-}
-
-//Функция освобождения памяти
-void FreeMemory(double** matrix, int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		delete[] matrix[i];
-	}
-	delete[] matrix;
 }
 
 bool GetInvertMatrix(const std::string& inputFileName)
 {
 	double **matrix;
 	double **inverseMatrix;
-	double** tInverseMatrix;
+	double **tInverseMatrix;
 	matrix = new double * [3];
 	inverseMatrix = new double * [3];
-	tInverseMatrix = new double*[3];
+	tInverseMatrix = new double * [3];
+	for (int i = 0; i < 3; i++)
+	{
+		matrix[i] = new double[3];
+		inverseMatrix[i] = new double[3];
+		tInverseMatrix[i] = new double[3];
+	}
+
+	matrix[0][0] = 1.2;
 
 	//Откроем файл и скопируем данные в массив
 	if (!CopyMatrixFromFileToArray(inputFileName, matrix))
